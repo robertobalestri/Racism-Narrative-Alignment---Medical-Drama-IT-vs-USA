@@ -1,0 +1,6 @@
+.env
+__pycache__/
+*.pyc
+
+# Subtitle corpus is not distributed
+!data/subtitles/README.md

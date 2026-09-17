@@ -1,0 +1,86 @@
+# Scala di Rappresentazione del Razzismo nei Media Italiani (-3 a +3)
+
+## Istruzioni Fondamentali
+Valuta la rappresentazione del razzismo in un episodio televisivo su una scala da -3 a +3 (o N/A se assente). L'analisi deve considerare il contesto italiano, dove le questioni razziali riguardano principalmente migranti, rom, e italiani di seconda generazione, con diverse sensibilità a seconda dell'epoca di produzione.
+
+**IMPORTANTE**: Considera il posizionamento dominante del testo nel suo complesso. In caso di dubbio tra due punteggi, **scegli quello che meglio rappresenta l'orientamento prevalente** piuttosto che rifugiarti nello 0.
+
+## Scala di Valutazione
+
+### N/A – Non Applicabile
+- Nessun riferimento a razza o etnia nell'episodio
+
+### -3 (Sostegno alla Discriminazione)
+L'episodio **convalida attivamente** idee discriminatorie:
+- Personaggi razzisti sono ritratti positivamente e le loro idee non vengono mai contestate
+- La narrazione supporta esplicitamente stereotipi dannosi
+- **Indicatori chiave**: Protagonisti o personaggi positivi esprimono idee razziste senza conseguenze negative
+
+### -2 (Normalizzazione del Pregiudizio)
+Atteggiamenti discriminatori **presentati come normali e accettabili**:
+- Stereotipi etnici ripetuti da più personaggi senza distanza critica
+- Commenti razzisti trattati come battute innocue
+- **Indicatori chiave**: Nessun personaggio contesta mai commenti problematici, l'atmosfera generale normalizza il pregiudizio
+
+### -1 (Minimizzazione)
+La diversità è presente ma **trattata in modo superficiale e stereotipato**:
+- Personaggi di diverse etnie definiti principalmente dai loro stereotipi
+- Commenti problematici **completamente incontestati** da tutti i personaggi
+- **Indicatori chiave**: Stereotipi riprodotti senza ironia o consapevolezza, personaggi ridotti a cliché etnici
+
+### 0 (Ambiguità Genuina) - **DA USARE SOLO QUANDO VERAMENTE AMBIGUO**
+**Usa questo punteggio SOLO quando ci sono segnali contrastanti equivalenti**:
+- Personaggi di diverse etnie hanno ruoli oltre la loro etnia, MA alcuni stereotipi vengono riprodotti acriticamente
+- Reazioni genuinamente miste: alcuni personaggi contestano, altri no, senza una direzione prevalente chiara
+- **Indicatori chiave**: Elementi sia progressisti che problematici in equilibrio, impossibile determinare l'orientamento dominante
+
+### +1 (Riconoscimento Consapevole)
+La narrazione mostra **consapevolezza critica** degli stereotipi:
+- Commenti problematici attribuiti **principalmente** a personaggi negativi
+- Personaggi di diverse etnie mostrano consapevolezza della propria condizione
+- **Indicatori chiave**: Uso consapevole di ironia sugli stereotipi, personaggi positivi mostrano rispetto per la diversità
+
+### +2 (Impegno Critico)
+Il razzismo è **affrontato come problema sociale**:
+- Personaggi sfidano attivamente i pregiudizi
+- Conseguenze negative per comportamenti discriminatori
+- **Indicatori chiave**: Dibattito esplicito su temi razziali, personaggi crescono superando pregiudizi
+
+### +3 (Inquadramento Trasformativo)
+**Analisi strutturale** della discriminazione:
+- Esplorazione delle cause sistemiche del razzismo
+- Voci marginalizzate sono centrali e autorevoli
+- **Indicatori chiave**: Critica alle strutture di potere, soluzioni concrete per l'equità
+
+## Criteri di Decisione per Evitare lo 0
+
+### Quando NON usare 0:
+- Se la maggioranza dei segnali punta verso una direzione (anche se ci sono elementi contraddittori minori)
+- Se l'episodio ha una "morale" o messaggio chiaro, anche se sottile
+- Se il comportamento dei protagonisti indica una posizione prevalente
+
+### Domande Guida per Evitare lo 0:
+1. **Chi ha ragione alla fine?** Se i personaggi più rispettosi "vincono" la situazione, tendi verso un punteggio maggiore di zero
+2. **Cosa impara il pubblico?** Se il messaggio implicito è "il razzismo è sbagliato", non è 0
+3. **Come reagiscono i personaggi positivi?** Se mostrano disagio o disapprovazione verso commenti razzisti, tendi verso  un punteggio maggiore di zero
+4. **Qual è il tono generale?** Se gli stereotipi sono presentati come "divertenti" senza critica, tendi verso  un punteggio minore di zero
+
+## Considerazioni per Epoca
+- **Anni '80-'90**: >0 per semplice presenza dignitosa di personaggi diversi
+- **Anni 2000-2010**: 0 richiede vera ambiguità, non semplice presenza acritica
+- **Periodo attuale**: <0 per rappresentazioni puramente stereotipate
+
+## Formato di Risposta JSON:
+```json
+{
+  "score": "[N/A oppure un valore da -3 a +3]",
+  "explanation": "[Spiega concisamente come l'episodio si allinei con i criteri del punteggio, identificando gli elementi dominanti]",
+  "why_not_lower": "[Se il punteggio non è -3 o N/A, spiega perché non hai assegnato un punteggio più basso]",
+  "why_not_higher": "[Se il punteggio non è +3 o N/A, spiega perché non hai assegnato un punteggio più alto]",
+}
+```
+
+---
+
+Sottotitoli:
+{subtitles_text}
