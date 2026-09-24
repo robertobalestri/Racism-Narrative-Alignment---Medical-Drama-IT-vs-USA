@@ -5,28 +5,60 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from common import figure_path, load_scores
+from common import figure_path, load_scores, write_notes
 
 sns.set_theme(style="whitegrid")
 
-LUSTRUM_BINS = [1994, 1999, 2004, 2009, 2014, 2019, 2024, 2029]
+# Bins are right-closed on the air year. The first one starts at 1993 so that it
+# takes in 1994, the first year of the study period: that period is six years long.
+LUSTRUM_BINS = [1993, 1999, 2004, 2009, 2014, 2019, 2024]
 LUSTRUM_LABELS = [
-    "1995-1999",
+    "1994-1999",
     "2000-2004",
     "2005-2009",
     "2010-2014",
     "2015-2019",
     "2020-2024",
-    "2025-2029",
 ]
-# The combined chart stops at 2024: the last bin holds too few episodes to compare.
-COMBINED_LABELS = LUSTRUM_LABELS[:-1]
 
 
 def lustrum_means(frame: pd.DataFrame) -> pd.DataFrame:
     frame = frame.copy()
     frame["Lustrum"] = pd.cut(frame["Year"], bins=LUSTRUM_BINS, labels=LUSTRUM_LABELS)
-    return frame.groupby("Lustrum", observed=False)["score"].mean().reset_index()
+    return (
+        frame.groupby("Lustrum", observed=False)
+        .agg(
+            score=("score", "mean"),
+            sd=("score", "std"),
+            episodes=("episode_code", "nunique"),
+            evaluations=("score", "size"),
+        )
+        .reset_index()
+    )
+
+
+NOTES_HEADER = [
+    "Bar height: mean of all numeric evaluations of the valid episodes (at most 5",
+    "N/A out of 10) first broadcast in that five-year period; each episode weighs as",
+    "many times as it has numeric evaluations. Lustrums are by air year, e.g.",
+    "2010-2014 covers 1 January 2010 to 31 December 2014; the first period,",
+    "1994-1999, is six years long so that 1994 is included. SD is the standard",
+    "deviation of those evaluations. A missing bar means no valid episode aired in",
+    "that period, not a mean of zero.",
+]
+
+
+def lustrum_table(means: pd.DataFrame) -> list:
+    lines = ["| Lustrum | Episodes | Evaluations | Mean | SD |", "|---|---|---|---|---|"]
+    for _, row in means.iterrows():
+        if row["episodes"] == 0:
+            lines.append(f"| {row['Lustrum']} | 0 | 0 | - | - |")
+            continue
+        sd = "n/a" if pd.isna(row["sd"]) else f"{row['sd']:.2f}"
+        lines.append(
+            f"| {row['Lustrum']} | {row['episodes']} | {row['evaluations']} | {row['score']:+.2f} | {sd} |"
+        )
+    return lines
 
 
 def annotate_bars(axes) -> None:
@@ -66,15 +98,12 @@ def single_dataset_plot(means: pd.DataFrame, title: str, color, filename: str) -
     plt.savefig(output, dpi=300, bbox_inches="tight")
     plt.close()
     print(f"Plot saved to {output}")
+    write_notes(filename, [f"# {title}", "", *NOTES_HEADER, "", *lustrum_table(means)])
 
 
 def combined_plot(means_it: pd.DataFrame, means_us: pd.DataFrame, filename: str) -> None:
     means_it, means_us = means_it.assign(Country="IT"), means_us.assign(Country="US")
     combined = pd.concat([means_it, means_us], ignore_index=True)
-    combined = combined[combined["Lustrum"].isin(COMBINED_LABELS)]
-    combined["Lustrum"] = combined["Lustrum"].astype(
-        pd.CategoricalDtype(categories=COMBINED_LABELS, ordered=True)
-    )
 
     plt.figure(figsize=(12, 7))
     axes = sns.barplot(
@@ -96,6 +125,22 @@ def combined_plot(means_it: pd.DataFrame, means_us: pd.DataFrame, filename: str)
     plt.savefig(output, dpi=300, bbox_inches="tight")
     plt.close()
     print(f"Plot saved to {output}")
+    write_notes(
+        filename,
+        [
+            "# Mean Narrative Score per Lustrum - IT vs US",
+            "",
+            *NOTES_HEADER,
+            "",
+            "## Italian Series (IT)",
+            "",
+            *lustrum_table(means_it),
+            "",
+            "## US Series (US)",
+            "",
+            *lustrum_table(means_us),
+        ],
+    )
 
 
 means_it = lustrum_means(load_scores("IT"))

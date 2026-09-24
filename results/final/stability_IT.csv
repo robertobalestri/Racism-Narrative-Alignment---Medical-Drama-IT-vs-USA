@@ -1,67 +1,67 @@
-episode_code,n_evaluations,n_distinct_answers,n_na,modal_answer,median,iqr,range,std,unanimous
-Braccialetti RossiS02E02,10,2,2,0,0.0,0.0,0.0,0.0,False
-Braccialetti RossiS02E05,10,1,0,1,1.0,0.0,0.0,0.0,True
-Crimini bianchiS01E07,10,1,0,1,1.0,0.0,0.0,0.0,True
-Crimini bianchiS01E09,10,1,0,1,1.0,0.0,0.0,0.0,True
-CuoriS01E12,10,2,7,N/A,1.0,0.0,0.0,0.0,False
-CuoriS02E12,10,1,10,N/A,,,,,True
-Doc Nelle Tue ManiS03E03,10,1,0,1,1.0,0.0,0.0,0.0,True
-Doc Nelle Tue ManiS03E09,10,1,10,N/A,,,,,True
-Doc Nelle Tue ManiS03E10,10,1,10,N/A,,,,,True
-Doc Nelle Tue ManiS03E11,10,1,0,1,1.0,0.0,0.0,0.0,True
-Doc Nelle Tue ManiS03E13,10,1,0,1,1.0,0.0,0.0,0.0,True
-Doc Nelle tue maniS01E08,10,2,0,2,2.0,0.0,1.0,0.31622776601683794,False
-Doc Nelle tue maniS02E10,10,1,10,N/A,,,,,True
-L allievaS01E06,10,2,0,1,1.5,1.0,1.0,0.5270462766947299,False
-L allievaS01E09,10,2,6,N/A,1.0,0.0,0.0,0.0,False
-L allievaS01E11,10,3,6,N/A,1.5,1.0,1.0,0.5773502691896257,False
-L allievaS02E01,10,1,10,N/A,,,,,True
-L allievaS02E06,10,1,0,2,2.0,0.0,0.0,0.0,True
-L allievaS02E08,10,1,10,N/A,,,,,True
-L allievaS02E09,10,1,0,2,2.0,0.0,0.0,0.0,True
-L allievaS02E10,10,2,0,1,1.0,0.75,1.0,0.48304589153964794,False
-L allievaS03E01,10,1,10,N/A,,,,,True
-L allievaS03E03,10,2,0,0,0.5,1.0,1.0,0.5270462766947299,False
-L allievaS03E09,10,2,4,0,0.0,0.0,0.0,0.0,False
-La dottoressa GioS01E01,10,1,0,1,1.0,0.0,0.0,0.0,True
-La dottoressa GioS01E02,10,1,0,-1,-1.0,0.0,0.0,0.0,True
-La dottoressa GioS01E03,10,1,0,-1,-1.0,0.0,0.0,0.0,True
-La dottoressa GioS01E04,10,1,0,1,1.0,0.0,0.0,0.0,True
-La dottoressa GioS01E05,10,1,0,1,1.0,0.0,0.0,0.0,True
-La dottoressa GioS02E04,10,2,0,1,1.0,0.0,2.0,0.6324555320336759,False
-La dottoressa GioS02E06,10,2,1,0,0.0,0.0,0.0,0.0,False
-La dottoressa GioS03E03,10,1,0,-1,-1.0,0.0,0.0,0.0,True
-La linea verticaleS01E01,10,3,6,N/A,0.5,1.0,1.0,0.5773502691896257,False
-La linea verticaleS01E03,10,1,0,-2,-2.0,0.0,0.0,0.0,True
-La linea verticaleS01E06,10,1,0,1,1.0,0.0,0.0,0.0,True
-Lea Un Nuovo giornoS01E02,10,1,0,1,1.0,0.0,0.0,0.0,True
-Lea Un Nuovo giornoS01E03,10,2,9,N/A,1.0,0.0,0.0,,False
-Lea Un Nuovo giornoS01E05,10,2,7,N/A,0.0,0.0,0.0,0.0,False
-Medicina generaleS01E03,10,1,0,1,1.0,0.0,0.0,0.0,True
-Medicina generaleS01E05,10,1,0,0,0.0,0.0,0.0,0.0,True
-Medicina generaleS01E08,10,1,0,1,1.0,0.0,0.0,0.0,True
-Medicina generaleS01E10,10,1,0,1,1.0,0.0,0.0,0.0,True
-Medicina generaleS01E12,10,2,0,2,2.0,0.75,1.0,0.4830458915396479,False
-Medicina generaleS01E13,10,1,0,1,1.0,0.0,0.0,0.0,True
-Medicina generaleS02E03,10,2,0,1,1.0,0.0,1.0,0.31622776601683794,False
-Medicina generaleS02E06,10,3,6,N/A,0.0,0.25,1.0,0.5,False
-Medicina generaleS02E08,10,2,9,N/A,0.0,0.0,0.0,,False
-Medicina generaleS02E11,10,2,9,N/A,0.0,0.0,0.0,,False
-Medicina generaleS02E12,10,2,3,1,1.0,0.0,0.0,0.0,False
-Medicina generaleS02E14,10,2,0,1,1.0,0.0,1.0,0.31622776601683794,False
-Medicina generaleS02E15,10,1,0,1,1.0,0.0,0.0,0.0,True
-MentalS01E01,10,2,0,1,1.0,0.0,1.0,0.31622776601683794,False
-MentalS01E04,10,1,0,1,1.0,0.0,0.0,0.0,True
-Nati ieriS01E03,10,1,0,1,1.0,0.0,0.0,0.0,True
-Nati ieriS01E06,10,1,0,1,1.0,0.0,0.0,0.0,True
-Nati ieriS01E09,10,2,0,-1,-1.0,2.0,2.0,1.0327955589886444,False
-Nati ieriS01E13,10,2,0,2,2.0,1.0,1.0,0.5163977794943222,False
-Nati ieriS01E15,10,1,0,1,1.0,0.0,0.0,0.0,True
-Nati ieriS01E16,10,1,0,1,1.0,0.0,0.0,0.0,True
-Nati ieriS01E19,10,1,0,0,0.0,0.0,0.0,0.0,True
-Oltre la sogliaS01E04,10,1,0,1,1.0,0.0,0.0,0.0,True
-Terapia d urgenzaS01E02,10,1,0,1,1.0,0.0,0.0,0.0,True
-Terapia d urgenzaS01E07,10,2,0,1,1.0,0.0,1.0,0.4216370213557839,False
-Terapia d urgenzaS01E10,10,2,0,1,1.5,1.0,1.0,0.5270462766947299,False
-Terapia d urgenzaS01E12,10,1,0,-1,-1.0,0.0,0.0,0.0,True
-Terapia d urgenzaS01E16,10,2,0,-2,-2.0,2.25,3.0,1.4491376746189437,False
+episode_code,n_evaluations,n_distinct_answers,n_na,modal_answer,median,iqr,range,std,unanimous,valid
+Braccialetti RossiS02E02,10,2,2,0,0.0,0.0,0.0,0.0,False,True
+Braccialetti RossiS02E05,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Crimini bianchiS01E07,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Crimini bianchiS01E09,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+CuoriS01E12,10,2,7,N/A,1.0,0.0,0.0,0.0,False,False
+CuoriS02E12,10,1,10,N/A,,,,,True,False
+Doc Nelle Tue ManiS03E03,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Doc Nelle Tue ManiS03E09,10,1,10,N/A,,,,,True,False
+Doc Nelle Tue ManiS03E10,10,1,10,N/A,,,,,True,False
+Doc Nelle Tue ManiS03E11,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Doc Nelle Tue ManiS03E13,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Doc Nelle tue maniS01E08,10,2,0,2,2.0,0.0,1.0,0.31622776601683794,False,True
+Doc Nelle tue maniS02E10,10,1,10,N/A,,,,,True,False
+L allievaS01E06,10,2,0,1,1.5,1.0,1.0,0.5270462766947299,False,True
+L allievaS01E09,10,2,6,N/A,1.0,0.0,0.0,0.0,False,False
+L allievaS01E11,10,3,6,N/A,1.5,1.0,1.0,0.5773502691896257,False,False
+L allievaS02E01,10,1,10,N/A,,,,,True,False
+L allievaS02E06,10,1,0,2,2.0,0.0,0.0,0.0,True,True
+L allievaS02E08,10,1,10,N/A,,,,,True,False
+L allievaS02E09,10,1,0,2,2.0,0.0,0.0,0.0,True,True
+L allievaS02E10,10,2,0,1,1.0,0.75,1.0,0.48304589153964794,False,True
+L allievaS03E01,10,1,10,N/A,,,,,True,False
+L allievaS03E03,10,2,0,0,0.5,1.0,1.0,0.5270462766947299,False,True
+L allievaS03E09,10,2,4,0,0.0,0.0,0.0,0.0,False,True
+La dottoressa GioS01E01,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+La dottoressa GioS01E02,10,1,0,-1,-1.0,0.0,0.0,0.0,True,True
+La dottoressa GioS01E03,10,1,0,-1,-1.0,0.0,0.0,0.0,True,True
+La dottoressa GioS01E04,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+La dottoressa GioS01E05,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+La dottoressa GioS02E04,10,2,0,1,1.0,0.0,2.0,0.6324555320336759,False,True
+La dottoressa GioS02E06,10,2,1,0,0.0,0.0,0.0,0.0,False,True
+La dottoressa GioS03E03,10,1,0,-1,-1.0,0.0,0.0,0.0,True,True
+La linea verticaleS01E01,10,3,6,N/A,0.5,1.0,1.0,0.5773502691896257,False,False
+La linea verticaleS01E03,10,1,0,-2,-2.0,0.0,0.0,0.0,True,True
+La linea verticaleS01E06,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Lea Un Nuovo giornoS01E02,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Lea Un Nuovo giornoS01E03,10,2,9,N/A,1.0,0.0,0.0,,False,False
+Lea Un Nuovo giornoS01E05,10,2,7,N/A,0.0,0.0,0.0,0.0,False,False
+Medicina generaleS01E03,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Medicina generaleS01E05,10,1,0,0,0.0,0.0,0.0,0.0,True,True
+Medicina generaleS01E08,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Medicina generaleS01E10,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Medicina generaleS01E12,10,2,0,2,2.0,0.75,1.0,0.4830458915396479,False,True
+Medicina generaleS01E13,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Medicina generaleS02E03,10,2,0,1,1.0,0.0,1.0,0.31622776601683794,False,True
+Medicina generaleS02E06,10,3,6,N/A,0.0,0.25,1.0,0.5,False,False
+Medicina generaleS02E08,10,2,9,N/A,0.0,0.0,0.0,,False,False
+Medicina generaleS02E11,10,2,9,N/A,0.0,0.0,0.0,,False,False
+Medicina generaleS02E12,10,2,3,1,1.0,0.0,0.0,0.0,False,True
+Medicina generaleS02E14,10,2,0,1,1.0,0.0,1.0,0.31622776601683794,False,True
+Medicina generaleS02E15,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+MentalS01E01,10,2,0,1,1.0,0.0,1.0,0.31622776601683794,False,True
+MentalS01E04,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Nati ieriS01E03,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Nati ieriS01E06,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Nati ieriS01E09,10,2,0,-1,-1.0,2.0,2.0,1.0327955589886444,False,True
+Nati ieriS01E13,10,2,0,2,2.0,1.0,1.0,0.5163977794943222,False,True
+Nati ieriS01E15,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Nati ieriS01E16,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Nati ieriS01E19,10,1,0,0,0.0,0.0,0.0,0.0,True,True
+Oltre la sogliaS01E04,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Terapia d urgenzaS01E02,10,1,0,1,1.0,0.0,0.0,0.0,True,True
+Terapia d urgenzaS01E07,10,2,0,1,1.0,0.0,1.0,0.4216370213557839,False,True
+Terapia d urgenzaS01E10,10,2,0,1,1.5,1.0,1.0,0.5270462766947299,False,True
+Terapia d urgenzaS01E12,10,1,0,-1,-1.0,0.0,0.0,0.0,True,True
+Terapia d urgenzaS01E16,10,2,0,-2,-2.0,2.25,3.0,1.4491376746189437,False,True

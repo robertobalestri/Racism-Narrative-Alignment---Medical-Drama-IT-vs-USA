@@ -6,10 +6,7 @@ study. Every LLM call in the pipeline is made to GPT-4.1.
 
 Two corpora are analysed with the same method: US medical dramas (1,553 episodes)
 and Italian medical dramas (249 episodes), all first broadcast between 1994 and
-2024. The US subtitle collection holds 14 further episodes that aired in 2025
-(Grey's Anatomy S21E09-E13, Chicago Med S10E09-E17); they are outside the study
-period and are excluded from the corpus before screening. They are listed in
-`data/airdates/out_of_period_US.csv`, and every stage skips them.
+2024.
 
 ## Method in three stages
 
@@ -48,7 +45,7 @@ data/subtitles/          Where the corpus goes (not distributed; see its README)
 results/screening/       Stage 1 output: which episodes are relevant
 results/likert/          Stage 2 output: ten evaluations per episode
 results/final/           Stage 3 output: evaluations plus air dates
-results/figures/         The figures
+results/figures/         The figures, each with a same-named .md: numbers and method
 ```
 
 The folder is self-contained: it imports nothing from outside itself.
@@ -91,24 +88,33 @@ Two points matter when interpreting the numbers:
 
 - **"N/A" is not zero.** An evaluation of N/A means the model found no racial
   content in the episode after reading it in full, despite the permissive
-  screening. These rows are excluded from every mean, trend and distribution in
-  the figures. They account for 22% of the Italian evaluations and 47% of the US
+  screening. They account for 22% of the Italian evaluations and 47% of the US
   ones.
+- **The final sample is the valid episodes.** An episode is kept only if at most
+  5 of its 10 evaluations are N/A (`MAX_NA_EVALUATIONS` in `src/config.py`):
+  50 of 66 Italian episodes and 222 of 416 US ones. Every figure, mean, trend and
+  distribution uses these episodes only, and within them only the numeric
+  evaluations.
 - **Ten evaluations, not one.** Any statistic computed over the rows of this file
   weights each episode ten times. `analysis/stability_stats.py` reports how much
   those ten answers actually differ, and writes a per-episode summary to
-  `results/final/stability_{IT,US}.csv`.
+  `results/final/stability_{IT,US}.csv`; `analysis/stability_table.py` writes the
+  same indicators as the Italian table below to `results/final/stability_table.md`.
+  `analysis/series_dispersion.py` writes the spread of episode medians within each
+  series to `results/final/series_dispersion.md`.
 
 Stability of the published runs, at temperature 0.3:
 
 | | Italian corpus | US corpus |
 |---|---|---|
-| Episodes | 66 | 416 |
-| All ten evaluations identical | 59.1% | 67.1% |
+| Episodes that passed screening | 66 | 416 |
+| All ten evaluations identical (ten N/A count as identical) | 59.1% | 67.1% |
 | Episodes mixing N/A with a score | 19.7% | 23.6% |
-| Mean interquartile range of numeric scores | 0.203 | 0.147 |
-| Share of episodes with an interquartile range of 0 | 81.4% | 88.5% |
-| Mean standard deviation of numeric scores | 0.170 | 0.150 |
+| Valid episodes (at most 5 N/A) | 50 | 222 |
+| Valid episodes with an interquartile range of 0 | 84.0% | 86.9% |
+| Mean interquartile range of numeric scores, valid episodes | 0.195 | 0.179 |
+| Mean range (max - min), valid episodes | 0.360 | 0.378 |
+| Mean standard deviation of numeric scores, valid episodes | 0.157 | 0.167 |
 
 ## Reproducibility notes
 
@@ -120,9 +126,6 @@ Stability of the published runs, at temperature 0.3:
   model received and are kept for fidelity.
 - Air dates are input data, not something the software derives. Stage 3 merges
   `data/airdates/airdates_*.csv` onto the Likert results by episode code.
-- The shipped screening and Likert CSVs are the raw outputs of the published runs
-  and still contain the out-of-period episodes (one of them, GAS21E10, passed
-  screening). They are filtered out when read, not deleted, so the raw record stays
-  intact. Stage 3 warns if any merged air date falls outside 1994-2024.
+  It warns if any merged air date falls outside the 1994-2024 study period.
 - Running stage 3 on the shipped Likert results reproduces the shipped final CSVs
   exactly; running the analysis scripts reproduces the shipped figures.

@@ -5,13 +5,18 @@ import numpy as np
 import pandas as pd
 import seaborn as sns
 
-from common import figure_path, load_scores
+from common import SERIES_RUNS, figure_path, load_scores, write_notes
+from series_dispersion import series_dispersion
 
 sns.set_theme(style="whitegrid")
 
 
 def series_summary(frame: pd.DataFrame) -> pd.DataFrame:
-    """Median score and first/last year of each series, in chronological order."""
+    """Median score of each series, ordered by the start of its broadcast run.
+
+    The label carries the series' original run (SERIES_RUNS); StartYear and EndYear
+    are the first and last air year of its valid episodes, reported in the notes.
+    """
     summary = (
         frame.groupby("series", observed=False)
         .agg(
@@ -20,12 +25,10 @@ def series_summary(frame: pd.DataFrame) -> pd.DataFrame:
             MedianScore=("score", "median"),
         )
         .reset_index()
-        .sort_values(by="StartYear")
     )
-    summary["Label"] = summary.apply(
-        lambda row: f"{row['series']} ({int(row['StartYear'])}-{int(row['EndYear'])})",
-        axis=1,
-    )
+    summary["Run"] = summary["series"].map(SERIES_RUNS)
+    summary = summary.sort_values(by=["Run", "series"])
+    summary["Label"] = summary["series"] + " (" + summary["Run"] + ")"
     return summary
 
 
@@ -62,7 +65,7 @@ def create_distribution_plot(frame: pd.DataFrame, title: str, filename: str) -> 
     plt.yticks([-3, -2, -1, 0, 1, 2, 3])
     plt.ylim(-3.5, 3.5)
     plt.xticks(rotation=45, ha="right", fontsize=9)
-    plt.xlabel("TV Series Title (Start-End based on valid episodes)", fontsize=11)
+    plt.xlabel("TV Series Title (Original Broadcast Run)", fontsize=11)
     plt.ylabel("Score", fontsize=11)
     plt.title(title, fontsize=14, pad=15)
     plt.legend(loc="upper right", fontsize=10)
@@ -72,6 +75,45 @@ def create_distribution_plot(frame: pd.DataFrame, title: str, filename: str) -> 
     plt.savefig(output, dpi=300, bbox_inches="tight")
     plt.close()
     print(f"Plot saved to {output}")
+    write_notes(filename, distribution_notes(frame, summary, title))
+
+
+def distribution_notes(frame: pd.DataFrame, summary: pd.DataFrame, title: str) -> list:
+    spread = series_dispersion(frame)
+    evaluations = frame.groupby("series")["score"].agg(["size", "min", "max"])
+    lines = [
+        f"# {title}",
+        "",
+        "Valid episodes only (at most 5 N/A out of 10), numeric evaluations only.",
+        "",
+        "- Dots: every numeric evaluation, jittered horizontally.",
+        "- Red diamond (series median): median of all the numeric evaluations of the",
+        "  series, as drawn.",
+        "- Label years: the original broadcast run of the series, as stated in the",
+        "  paper. Valid episodes: first and last air year of the valid episodes.",
+        "- SD of episode medians: each episode is first reduced to the median of its",
+        "  evaluations, then the standard deviation of those medians is taken within",
+        "  the series. Population SD (ddof=0) and sample SD (ddof=1); the sample SD is",
+        "  undefined (n/a) for a series with a single episode. An SD of 0 means every",
+        "  episode of the series has the same median score.",
+        "",
+        "| Series | Run | Valid episodes aired | Episodes | Evaluations | Series median | SD of episode medians (pop. / sample) | Range of episode medians | Range of evaluations |",
+        "|---|---|---|---|---|---|---|---|---|",
+    ]
+    for _, row in summary.iterrows():
+        series = row["series"]
+        sd = spread.loc[series]
+        sample_sd = "n/a" if pd.isna(sd["std_sample"]) else f"{sd['std_sample']:.2f}"
+        lines.append(
+            f"| {series} | {row['Run']} | {int(row['StartYear'])}-{int(row['EndYear'])} | {sd['episodes']} "
+            f"| {evaluations.loc[series, 'size']} | {row['MedianScore']:+.1f} "
+            f"| {sd['std_population']:.2f} / {sample_sd} "
+            f"| {sd['minimum']:+.1f} to {sd['maximum']:+.1f} "
+            f"| {evaluations.loc[series, 'min']:+.0f} to {evaluations.loc[series, 'max']:+.0f} |"
+        )
+    zero = spread.index[spread["std_population"].eq(0)].tolist()
+    lines += ["", f"Series with SD of episode medians = 0: {', '.join(zero) if zero else 'none'}."]
+    return lines
 
 
 create_distribution_plot(

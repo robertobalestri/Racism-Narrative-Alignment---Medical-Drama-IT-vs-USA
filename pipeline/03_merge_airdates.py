@@ -15,7 +15,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.config import STUDY_FIRST_YEAR, STUDY_LAST_YEAR, dataset, out_of_period
+from src.config import STUDY_FIRST_YEAR, STUDY_LAST_YEAR, dataset
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -38,7 +38,6 @@ def merge(dataset_name: str) -> None:
     paths = dataset(dataset_name)
 
     likert = pd.read_csv(paths["likert_csv"], dtype=str, keep_default_na=False)
-    likert = likert[~likert["episode_code"].isin(out_of_period(dataset_name))]
     airdates = pd.read_csv(paths["airdates_csv"], dtype=str, keep_default_na=False)
 
     # The Likert file already carries series/season/episode; take only the date.
@@ -55,8 +54,8 @@ def merge(dataset_name: str) -> None:
     outside = merged.loc[~years.between(STUDY_FIRST_YEAR, STUDY_LAST_YEAR) & years.notna(), "episode_code"]
     if not outside.empty:
         logger.warning(
-            f"Episodes dated outside {STUDY_FIRST_YEAR}-{STUDY_LAST_YEAR}, "
-            f"add them to {paths['out_of_period_csv'].name}: {sorted(set(outside))}"
+            f"Episodes dated outside the study period "
+            f"{STUDY_FIRST_YEAR}-{STUDY_LAST_YEAR}: {sorted(set(outside))}"
         )
 
     output_csv = paths["final_csv"]

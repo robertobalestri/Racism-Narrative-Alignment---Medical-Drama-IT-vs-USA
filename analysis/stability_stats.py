@@ -12,7 +12,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.config import FINAL_DIR, dataset
+from src.config import FINAL_DIR, MAX_NA_EVALUATIONS, dataset
 
 
 def load_raw_scores(dataset_name: str) -> pd.DataFrame:
@@ -46,6 +46,7 @@ def per_episode_stability(frame: pd.DataFrame) -> pd.DataFrame:
     stability["range"] = numeric.max() - numeric.min()
     stability["std"] = numeric.std()
     stability["unanimous"] = stability["n_distinct_answers"] == 1
+    stability["valid"] = stability["n_na"] <= MAX_NA_EVALUATIONS
     return stability.reset_index()
 
 
@@ -54,11 +55,12 @@ def report(dataset_name: str) -> pd.DataFrame:
     episodes = len(stability)
     unanimous = int(stability["unanimous"].sum())
     mixed_na = int(((stability["n_na"] > 0) & (stability["n_na"] < stability["n_evaluations"])).sum())
-    scored = stability.dropna(subset=["iqr"])
+    scored = stability[stability["valid"]]
 
     print(f"=== {dataset_name}: {episodes} episodes x 10 evaluations ===")
     print(f"unanimous (all 10 identical): {unanimous}/{episodes} ({100 * unanimous / episodes:.1f}%)")
     print(f"episodes mixing N/A and a score: {mixed_na}/{episodes} ({100 * mixed_na / episodes:.1f}%)")
+    print(f"valid episodes (at most {MAX_NA_EVALUATIONS} N/A): {len(scored)}/{episodes}; spread measures below are over them")
     print(f"mean IQR of numeric scores: {scored['iqr'].mean():.3f} (median {scored['iqr'].median():.3f})")
     print(f"share with IQR = 0: {100 * scored['iqr'].eq(0).mean():.1f}%")
     print(f"mean range (max-min): {scored['range'].mean():.3f}")

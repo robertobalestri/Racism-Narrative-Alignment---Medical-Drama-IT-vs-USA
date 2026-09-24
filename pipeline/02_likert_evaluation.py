@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Set, Tuple
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.config import NUMBER_OF_ATTEMPTS, dataset, out_of_period
+from src.config import NUMBER_OF_ATTEMPTS, dataset
 from src.llm_client import GPT41Client
 from src.srt_parser import convert_srts_to_json, load_subtitles_text
 
@@ -92,7 +92,7 @@ def evaluate(dataset_name: str) -> None:
         return
 
     base_prompt = paths["likert_prompt"].read_text(encoding="utf-8")
-    relevant = load_relevant_episodes(paths["screening_csv"]) - out_of_period(dataset_name)
+    relevant = load_relevant_episodes(paths["screening_csv"])
     logger.info(f"{len(relevant)} episodes to evaluate.")
 
     convert_srts_to_json(subtitles_dir)

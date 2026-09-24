@@ -1,9 +1,8 @@
 """Paths, dataset definitions and model settings for the whole pipeline."""
 
-import csv
 import os
 from pathlib import Path
-from typing import Any, Dict, Set
+from typing import Any, Dict
 
 from dotenv import load_dotenv
 
@@ -24,6 +23,10 @@ FIGURES_DIR = RESULTS_DIR / "figures"
 # Number of independent LLM evaluations per episode, used to measure stability.
 NUMBER_OF_ATTEMPTS = 10
 
+# An episode stays in the final sample only if at most this many of its ten
+# evaluations are "N/A".
+MAX_NA_EVALUATIONS = 5
+
 # The study covers episodes first broadcast in these years, inclusive.
 STUDY_FIRST_YEAR = 1994
 STUDY_LAST_YEAR = 2024
@@ -43,7 +46,6 @@ DATASETS: Dict[str, Dict[str, Path]] = {
         "screening_csv": SCREENING_DIR / "gpt_4_1_racism_classification_results_IT.csv",
         "likert_csv": LIKERT_DIR / "gpt41_likert_episodio_razzismo_full_IT.csv",
         "airdates_csv": AIRDATES_DIR / "airdates_IT.csv",
-        "out_of_period_csv": AIRDATES_DIR / "out_of_period_IT.csv",
         "final_csv": FINAL_DIR / "dati_racism_IT_con_data.csv",
     },
     "US": {
@@ -52,7 +54,6 @@ DATASETS: Dict[str, Dict[str, Path]] = {
         "screening_csv": SCREENING_DIR / "gpt_4_1_racism_classification_results_US.csv",
         "likert_csv": LIKERT_DIR / "gpt41_likert_episodio_razzismo_full_US.csv",
         "airdates_csv": AIRDATES_DIR / "airdates_US.csv",
-        "out_of_period_csv": AIRDATES_DIR / "out_of_period_US.csv",
         "final_csv": FINAL_DIR / "dati_racism_US_con_data.csv",
     },
 }
@@ -67,15 +68,3 @@ def dataset(name: str) -> Dict[str, Path]:
         raise ValueError(f"Unknown dataset '{name}'. Available: {sorted(DATASETS)}")
     return DATASETS[key]
 
-
-def out_of_period(name: str) -> Set[str]:
-    """Episode codes in the corpus broadcast outside the study period.
-
-    They are excluded from the corpus before screening, so every stage skips them.
-    The list is curated by hand because only screened-in episodes have air dates.
-    """
-    csv_path = dataset(name)["out_of_period_csv"]
-    if not csv_path.is_file():
-        return set()
-    with open(csv_path, "r", newline="", encoding="utf-8") as handle:
-        return {row["episode_code"].strip() for row in csv.DictReader(handle)}
