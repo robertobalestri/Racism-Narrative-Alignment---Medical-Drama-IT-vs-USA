@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Set, Tuple
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.config import SCREENING_PROMPT, dataset
+from src.config import SCREENING_PROMPT, dataset, out_of_period
 from src.llm_client import GPT41Client
 from src.srt_parser import convert_srts_to_json, load_subtitles_text
 
@@ -67,6 +67,7 @@ def screen(dataset_name: str) -> None:
 
     client = GPT41Client()
     rows, processed = load_existing(output_csv)
+    excluded = out_of_period(dataset_name)
     logger.info(f"{len(processed)} episodes already screened.")
 
     for json_path in sorted(subtitles_dir.rglob("*.json")):
@@ -76,7 +77,7 @@ def screen(dataset_name: str) -> None:
             logger.warning(f"Cannot read metadata from {json_path}: {error}")
             continue
 
-        if metadata["episode_code"] in processed:
+        if metadata["episode_code"] in processed or metadata["episode_code"] in excluded:
             continue
 
         subtitles_text = load_subtitles_text(json_path)
@@ -102,8 +103,12 @@ def screen(dataset_name: str) -> None:
         processed.add(metadata["episode_code"])
         save(rows, output_csv)
 
-    positives = sum(1 for row in rows if row.get("bool_response") == "Yes")
-    logger.info(f"Done. {len(rows)} episodes screened, {positives} flagged as relevant.")
+    in_period = [row for row in rows if row["episode_code"] not in excluded]
+    positives = sum(1 for row in in_period if row.get("bool_response") == "Yes")
+    logger.info(
+        f"Done. {len(in_period)} episodes in the study period, {positives} flagged as relevant "
+        f"({len(rows) - len(in_period)} out-of-period rows in the CSV ignored)."
+    )
     logger.info(f"Results written to {output_csv}")
 
 

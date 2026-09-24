@@ -15,7 +15,7 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from src.config import dataset
+from src.config import STUDY_FIRST_YEAR, STUDY_LAST_YEAR, dataset, out_of_period
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -38,14 +38,26 @@ def merge(dataset_name: str) -> None:
     paths = dataset(dataset_name)
 
     likert = pd.read_csv(paths["likert_csv"], dtype=str, keep_default_na=False)
+    likert = likert[~likert["episode_code"].isin(out_of_period(dataset_name))]
     airdates = pd.read_csv(paths["airdates_csv"], dtype=str, keep_default_na=False)
 
+    # The Likert file already carries series/season/episode; take only the date.
+    airdates = airdates[["episode_code", "data_messa_in_onda"]]
     merged = likert.merge(airdates, on="episode_code", how="left")
+    merged["data_messa_in_onda"] = merged["data_messa_in_onda"].fillna("")
 
     missing = merged["data_messa_in_onda"].eq("").sum()
     if missing:
         codes = sorted(set(merged.loc[merged["data_messa_in_onda"].eq(""), "episode_code"]))
         logger.warning(f"{missing} rows without an air date ({len(codes)} episodes): {codes}")
+
+    years = pd.to_datetime(merged["data_messa_in_onda"], dayfirst=True, errors="coerce").dt.year
+    outside = merged.loc[~years.between(STUDY_FIRST_YEAR, STUDY_LAST_YEAR) & years.notna(), "episode_code"]
+    if not outside.empty:
+        logger.warning(
+            f"Episodes dated outside {STUDY_FIRST_YEAR}-{STUDY_LAST_YEAR}, "
+            f"add them to {paths['out_of_period_csv'].name}: {sorted(set(outside))}"
+        )
 
     output_csv = paths["final_csv"]
     output_csv.parent.mkdir(parents=True, exist_ok=True)

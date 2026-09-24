@@ -4,15 +4,19 @@ Software used to measure how television episodes position themselves with respec
 to racism, and to produce the results and figures reported in the accompanying
 study. Every LLM call in the pipeline is made to GPT-4.1.
 
-Two corpora are analysed with the same method: US medical dramas (1,567 episodes)
-and Italian medical dramas (249 episodes).
+Two corpora are analysed with the same method: US medical dramas (1,553 episodes)
+and Italian medical dramas (249 episodes), all first broadcast between 1994 and
+2024. The US subtitle collection holds 14 further episodes that aired in 2025
+(Grey's Anatomy S21E09-E13, Chicago Med S10E09-E17); they are outside the study
+period and are excluded from the corpus before screening. They are listed in
+`data/airdates/out_of_period_US.csv`, and every stage skips them.
 
 ## Method in three stages
 
 **1. Screening.** Each episode's subtitles are sent to GPT-4.1 with a short prompt
 asking whether racism, racial discrimination or racial prejudice is mentioned or
 implied, explicitly or otherwise. The instruction is deliberately permissive: in
-case of doubt, answer Yes. 417 US episodes and 66 Italian episodes pass this
+case of doubt, answer Yes. 416 US episodes and 66 Italian episodes pass this
 filter.
 
 **2. Likert evaluation.** Every episode that passed screening is scored on a scale
@@ -99,9 +103,9 @@ Stability of the published runs, at temperature 0.3:
 
 | | Italian corpus | US corpus |
 |---|---|---|
-| Episodes | 66 | 417 |
-| All ten evaluations identical | 59.1% | 66.9% |
-| Episodes mixing N/A with a score | 19.7% | 23.7% |
+| Episodes | 66 | 416 |
+| All ten evaluations identical | 59.1% | 67.1% |
+| Episodes mixing N/A with a score | 19.7% | 23.6% |
 | Mean interquartile range of numeric scores | 0.203 | 0.147 |
 | Share of episodes with an interquartile range of 0 | 81.4% | 88.5% |
 | Mean standard deviation of numeric scores | 0.170 | 0.150 |
@@ -116,5 +120,9 @@ Stability of the published runs, at temperature 0.3:
   model received and are kept for fidelity.
 - Air dates are input data, not something the software derives. Stage 3 merges
   `data/airdates/airdates_*.csv` onto the Likert results by episode code.
+- The shipped screening and Likert CSVs are the raw outputs of the published runs
+  and still contain the out-of-period episodes (one of them, GAS21E10, passed
+  screening). They are filtered out when read, not deleted, so the raw record stays
+  intact. Stage 3 warns if any merged air date falls outside 1994-2024.
 - Running stage 3 on the shipped Likert results reproduces the shipped final CSVs
   exactly; running the analysis scripts reproduces the shipped figures.

@@ -11,6 +11,17 @@ from src.config import FIGURES_DIR, dataset
 
 COUNTRY_LABELS = {"IT": "Italian Series", "US": "US Series"}
 
+US_SERIES_NAMES = {
+    "ER": "ER",
+    "H": "House",
+    "GA": "Grey's Anatomy",
+    "PP": "Private Practice",
+    "CM": "Chicago Med",
+    "TGD": "The Good Doctor",
+    "TR": "The Resident",
+    "NA": "New Amsterdam",
+}
+
 
 def load_scores(dataset_name: str) -> pd.DataFrame:
     """Loads the merged results of one dataset, keeping only scored, dated episodes.
@@ -19,7 +30,13 @@ def load_scores(dataset_name: str) -> pd.DataFrame:
     and are dropped here, exactly as in the published analysis.
     """
     paths = dataset(dataset_name)
-    frame = pd.read_csv(paths["final_csv"], sep=";", encoding="utf-8-sig")
+    # keep_default_na=False: pandas would otherwise read the series code "NA"
+    # (New Amsterdam) as missing. "N/A" scores are coerced to NaN explicitly.
+    frame = pd.read_csv(
+        paths["final_csv"], sep=";", encoding="utf-8-sig", keep_default_na=False
+    )
+    frame["score"] = pd.to_numeric(frame["score"], errors="coerce")
+    frame["series"] = frame["series"].replace(US_SERIES_NAMES)
     frame["Air Date"] = pd.to_datetime(
         frame["data_messa_in_onda"], dayfirst=True, errors="coerce"
     )
