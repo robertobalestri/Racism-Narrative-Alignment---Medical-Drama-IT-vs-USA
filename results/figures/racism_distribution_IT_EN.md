@@ -27,6 +27,6 @@ Valid episodes only (at most 5 N/A out of 10), numeric evaluations only.
 | Oltre la soglia | 2019 | 2019-2019 | 1 | 10 | +1.00 | 0.00 / n/a | +1.0 to +1.0 |
 | Mental | 2020 | 2020-2020 | 2 | 20 | +1.00 | 0.00 / 0.00 | +1.0 to +1.0 |
 | DOC – Nelle tue mani | 2020–present | 2020-2024 | 4 | 40 | +1.00 | 0.43 / 0.50 | +1.0 to +2.0 |
-| Lea – Un nuovo giorno | 2022–present | 2022-2022 | 1 | 10 | +1.00 | 0.00 / n/a | +1.0 to +1.0 |
+| Lea – Un nuovo giorno | 2022–2023 | 2022-2022 | 1 | 10 | +1.00 | 0.00 / n/a | +1.0 to +1.0 |
 
 Series with SD of episode medians = 0: Crimini Bianchi, Mental, Lea – Un nuovo giorno, Oltre la soglia.

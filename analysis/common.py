@@ -52,7 +52,7 @@ SERIES_RUNS = {
     "Medicina Generale": "2007–2010",
     "Terapia d’urgenza": "2008–2009",
     "DOC – Nelle tue mani": "2020–present",
-    "Lea – Un nuovo giorno": "2022–present",
+    "Lea – Un nuovo giorno": "2022–2023",
     "Braccialetti Rossi": "2014–2016",
     "Crimini Bianchi": "2008–2009",
     "Cuori": "2021–present",
